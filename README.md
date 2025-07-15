@@ -39,4 +39,4 @@ Aprender a utilizar GitHub para el control de versiones y desplegar una aplicaci
 
 ---
 
-¡Con esta práctica aprenderás a integrar el flujo de trabajo de desarrollo con GitHub y el despliegue automático en Azure!
+¡Con esta práctica aprenderás a integrar el flujo de trabajo de desarrollo con GitHub y el despliegue automático en Azure! :)))
