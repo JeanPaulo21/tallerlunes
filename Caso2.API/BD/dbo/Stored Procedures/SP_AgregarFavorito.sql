@@ -1,4 +1,6 @@
-﻿CREATE PROCEDURE [dbo].[SP_AgregarFavorito]
+﻿/*Jean Paulo Monge Alfaro*/
+
+CREATE PROCEDURE [dbo].[SP_AgregarFavorito]
     @ID UNIQUEIDENTIFIER,
     @UsuarioID UNIQUEIDENTIFIER,
     @TMDB_ID INT,
