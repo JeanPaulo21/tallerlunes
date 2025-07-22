@@ -1,0 +1,52 @@
+﻿@page
+@model Web.Pages.Favoritos.EditarModel
+@{
+    ViewData["Title"] = "Editar Favorito";
+}
+
+<div class="edit-container">
+    <div class="edit-header">
+        <h2>Editar Favorito</h2>
+        <p>Modifique el comentario o puntuación del favorito</p>
+    </div>
+
+    <form method="post" class="edit-form">
+        <input type="hidden" asp-for="Favorito.ID" />
+
+        <div class="form-group">
+            <label asp-for="Favorito.UsuarioID" class="form-label">Usuario ID</label>
+            <input asp-for="Favorito.UsuarioID" class="form-control" readonly />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Favorito.TMDB_ID" class="form-label">TMDB ID</label>
+            <input asp-for="Favorito.TMDB_ID" class="form-control" readonly />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Favorito.Tipo" class="form-label">Tipo</label>
+            <input asp-for="Favorito.Tipo" class="form-control" readonly />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Favorito.Comentario" class="form-label">Comentario</label>
+            <textarea asp-for="Favorito.Comentario" class="form-control" rows="4"></textarea>
+            <span asp-validation-for="Favorito.Comentario" class="validation-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Favorito.Puntuacion" class="form-label">Puntuación</label>
+            <input asp-for="Favorito.Puntuacion" class="form-control" type="number" step="0.1" min="0" max="10" />
+            <span asp-validation-for="Favorito.Puntuacion" class="validation-message"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">Actualizar</button>
+            <a asp-page="./Index" class="cancel-btn">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

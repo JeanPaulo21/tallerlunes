@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Usuarios] (
+    [ID]     UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
+    [Nombre] NVARCHAR (100)   NOT NULL,
+    [Correo] NVARCHAR (100)   NOT NULL,
+    PRIMARY KEY CLUSTERED ([ID] ASC),
+    UNIQUE NONCLUSTERED ([Correo] ASC)
+);
+

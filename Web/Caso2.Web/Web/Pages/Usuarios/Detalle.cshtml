@@ -1,0 +1,37 @@
+﻿@page
+@model Web.Pages.Usuarios.DetalleModel
+@{
+    ViewData["Title"] = "Detalle de Usuario";
+}
+
+<div class="detail-container">
+    <div class="detail-header">
+        <h2>Detalle de Usuario</h2>
+        <p>Información completa del usuario registrado</p>
+    </div>
+
+    <div class="detail-card">
+        <div class="detail-content">
+            <h3>Información del Usuario</h3>
+
+            <div class="detail-item">
+                <span class="detail-label">ID:</span>
+                <span class="detail-value">@Model.usuario.ID</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Nombre:</span>
+                <span class="detail-value">@Model.usuario.Nombre</span>
+            </div>
+
+            <div class="detail-item">
+                <span class="detail-label">Correo:</span>
+                <span class="detail-value">@Model.usuario.Correo</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="detail-actions">
+        <a asp-page="/Usuarios/Index" class="back-btn">Volver a la Lista</a>
+    </div>
+</div>

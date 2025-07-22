@@ -1,0 +1,74 @@
+﻿@page
+@model Web.Pages.Favoritos.IndexModel
+@{
+    ViewData["Title"] = "Listado de Favoritos";
+}
+
+<div class="favorites-container">
+    <div class="favorites-header">
+        <h1>Listado de Favoritos</h1>
+        <div class="favorites-actions">
+            <a asp-page="./Agregar" class="action-btn primary-action">
+                <i class="bi bi-plus-lg"></i> Agregar Favorito
+            </a>
+            <a asp-page="/Favoritos/DetalleUsuario" class="action-btn info-action">
+                <i class="bi bi-people"></i> Favoritos por Usuario
+            </a>
+        </div>
+    </div>
+
+    @if (Model.Favoritos != null && Model.Favoritos.Any())
+    {
+        <div class="favorites-grid">
+            @foreach (var favorito in Model.Favoritos)
+            {
+                <div class="favorite-card">
+                    <div class="favorite-card-header">
+                        <div class="favorite-icon">
+                            @if (favorito.Tipo == "Pelicula")
+                            {
+                                <i class="bi bi-film"></i>
+                            }
+                            else if (favorito.Tipo == "Serie")
+                            {
+                                <i class="bi bi-tv"></i>
+                            }
+                        </div>
+                        <h3 class="favorite-title">
+                            @favorito.Tipo ID: @favorito.TMDB_ID
+                        </h3>
+                    </div>
+                    <div class="favorite-details">
+                        <p><i class="bi bi-chat-text"></i> @favorito.Comentario</p>
+                        <p><i class="bi bi-star"></i> Puntuación: @favorito.Puntuacion</p>
+                        <p><i class="bi bi-calendar"></i> Registrado: @favorito.FechaRegistro.ToString("dd/MM/yyyy")</p>
+                    </div>
+                    <div class="favorite-actions">
+                        <a asp-page="/Favoritos/DetalleFavorito" asp-route-id="@favorito.ID" class="action-btn info-action">
+                            Detalle
+                        </a>
+                        <a asp-page="/Favoritos/Editar" asp-route-id="@favorito.ID" class="action-btn warning-action">
+                            Editar
+                        </a>
+                        <a asp-page="/Favoritos/Eliminar" asp-route-id="@favorito.ID" class="action-btn danger-action">
+                            Eliminar
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="no-favorites">
+            <i class="bi bi-heart"></i>
+            <p>No hay favoritos registrados</p>
+        </div>
+    }
+
+    <div class="back-container">
+        <a asp-page="/Index" class="back-btn">
+            Volver al menú principal
+        </a>
+    </div>
+</div>

@@ -1,0 +1,52 @@
+﻿@page
+@model Web.Pages.Listas.EliminarModel
+@{
+    ViewData["Title"] = "Eliminar Lista";
+}
+
+<div class="delete-container">
+    <div class="delete-header">
+        <h1>Eliminar Lista</h1>
+        <p>Confirme la eliminación de esta lista</p>
+    </div>
+
+    <form method="post" class="delete-form">
+        @if (Model.Lista == null)
+        {
+            <div class="not-found-message">
+                Lista no encontrada
+            </div>
+        }
+        else
+        {
+            <input type="hidden" asp-for="Lista.ID" />
+            <div class="delete-card">
+                <div class="delete-content">
+                    <h3>@Model.Lista.Tipo - TMDB ID: @Model.Lista.TMDB_ID</h3>
+
+                    <div class="delete-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Usuario ID:</span>
+                            <span class="detail-value">@Model.Lista.UsuarioID</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label">Prioridad:</span>
+                            <span class="detail-value">@Model.Lista.Prioridad</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label">Comentario:</span>
+                            <span class="detail-value">@(string.IsNullOrEmpty(Model.Lista.Comentario) ? "-" : Model.Lista.Comentario)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="delete-actions">
+                <a asp-page="/Listas/Index" class="cancel-btn">Volver al Listado</a>
+                <button type="submit" class="delete-btn">Confirmar Eliminación</button>
+            </div>
+        }
+    </form>
+</div>
