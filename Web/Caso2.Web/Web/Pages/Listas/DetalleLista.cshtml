@@ -1,0 +1,61 @@
+﻿@page
+@model Web.Pages.Listas.DetalleListaModel
+@{
+    ViewData["Title"] = "Detalle de Lista";
+}
+
+<div class="detail-container">
+    <div class="detail-header">
+        <h1>Detalle de Lista</h1>
+        <p>Información completa de la lista de visualización</p>
+    </div>
+
+    @if (Model.Lista == null)
+    {
+        <div class="not-found-message">
+            Lista no encontrada
+        </div>
+    }
+    else
+    {
+        <div class="detail-card">
+            <div class="detail-content">
+                <div class="media-type-badge @Model.Lista.Tipo.ToLower()">
+                    @if (Model.Lista.Tipo == "Pelicula")
+                    {
+                        <span>Película ID: @Model.Lista.TMDB_ID</span>
+                    }
+                    else if (Model.Lista.Tipo == "Serie")
+                    {
+                        <span>Serie ID: @Model.Lista.TMDB_ID</span>
+                    }
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">Usuario ID:</span>
+                    <span class="detail-value">@Model.Lista.UsuarioID</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">Prioridad:</span>
+                    <span class="detail-value">@Model.Lista.Prioridad</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">Comentario:</span>
+                    <span class="detail-value">@Model.Lista.Comentario</span>
+                </div>
+
+                <div class="detail-date">
+                    <span>Fecha de Registro: @Model.Lista.FechaRegistro?.ToString("g")</span>
+                </div>
+            </div>
+
+            <div class="detail-actions">
+                <a asp-page="/Listas/Index" class="back-btn">Volver al Listado</a>
+                <a asp-page="/Listas/Editar" asp-route-id="@Model.Lista.ID" class="edit-btn">Editar</a>
+                <a asp-page="/Listas/Eliminar" asp-route-id="@Model.Lista.ID" class="delete-btn">Eliminar</a>
+            </div>
+        </div>
+    }
+</div>

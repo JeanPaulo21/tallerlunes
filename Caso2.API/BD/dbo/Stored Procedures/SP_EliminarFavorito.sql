@@ -1,0 +1,8 @@
+﻿
+CREATE PROCEDURE [dbo].[SP_EliminarFavorito]
+    @ID UNIQUEIDENTIFIER
+AS
+BEGIN
+    DELETE FROM Favoritos
+    WHERE ID = @ID;
+END

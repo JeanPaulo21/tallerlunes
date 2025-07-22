@@ -1,0 +1,52 @@
+﻿@page
+@model Web.Pages.Favoritos.EliminarModel
+@{
+    ViewData["Title"] = "Eliminar Favorito";
+}
+
+<div class="delete-container">
+    <div class="delete-header">
+        <h1>Eliminar Favorito</h1>
+        <p>Confirme la eliminación de este favorito</p>
+    </div>
+
+    <form method="post" class="delete-form">
+        @if (Model.Favorito == null)
+        {
+            <div class="not-found-message">
+                Favorito no encontrado
+            </div>
+        }
+        else
+        {
+            <input type="hidden" asp-for="Favorito.ID" />
+            <div class="delete-card">
+                <div class="delete-content">
+                    <h3>@Model.Favorito.Tipo - TMDB ID: @Model.Favorito.TMDB_ID</h3>
+
+                    <div class="delete-details">
+                        <div class="detail-item">
+                            <span class="detail-label">Usuario ID:</span>
+                            <span class="detail-value">@Model.Favorito.UsuarioID</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label">Comentario:</span>
+                            <span class="detail-value">@(string.IsNullOrEmpty(Model.Favorito.Comentario) ? "-" : Model.Favorito.Comentario)</span>
+                        </div>
+
+                        <div class="detail-item">
+                            <span class="detail-label">Puntuación:</span>
+                            <span class="detail-value">@Model.Favorito.Puntuacion</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="delete-actions">
+                <a asp-page="/Favoritos/Index" class="cancel-btn">Volver al Listado</a>
+                <button type="submit" class="delete-btn">Confirmar Eliminación</button>
+            </div>
+        }
+    </form>
+</div>

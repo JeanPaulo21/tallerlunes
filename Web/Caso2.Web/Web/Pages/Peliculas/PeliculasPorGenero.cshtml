@@ -1,0 +1,65 @@
+﻿@page
+@model PeliculasPorGenero
+@{
+    ViewData["Title"] = "Películas por Género";
+}
+
+<div class="movies-container">
+    <div class="section-header">
+        <h1>Películas por Género</h1>
+        <p>Descubre películas por categoría</p>
+    </div>
+
+    <div class="filter-section">
+        <form method="post">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <select asp-for="GeneroSeleccionado" class="form-select" asp-items="@(new SelectList(Model.Generos, "Id", "Name"))" required>
+                        <option value="">Seleccione un género</option>
+                    </select>
+                </div>
+                <div class="filter-action">
+                    <button type="submit" class="primary-btn">Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @if (Model.Peliculas != null && Model.Peliculas.Any())
+    {
+        <div class="movies-grid">
+            @foreach (var pelicula in Model.Peliculas)
+            {
+                <div class="movie-card">
+                    @if (!string.IsNullOrEmpty(pelicula.Poster_path))
+                    {
+                        <div class="movie-poster">
+                            <img src="@($"https://image.tmdb.org/t/p/w500{pelicula.Poster_path}")" alt="@pelicula.Title" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'" />
+                        </div>
+                    }
+                    <div class="movie-info">
+                        <h3>@pelicula.Title</h3>
+                        <p class="movie-overview">@pelicula.Overview</p>
+                        <div class="movie-details">
+                            <span class="release-date">@pelicula.Release_date</span>
+                            <span class="rating">⭐ @pelicula.Vote_average</span>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else if (Model.GeneroSeleccionado > 0)
+    {
+        <div class="empty-message">
+            <p>No se encontraron películas para este género</p>
+        </div>
+    }
+
+    <div class="back-section">
+        <a asp-page="/Peliculas/Index" class="back-btn">
+            Volver al listado
+        </a>
+    </div>
+
+</div>

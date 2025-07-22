@@ -1,0 +1,157 @@
+﻿@page
+@model Web.Pages.Favoritos.AgregarModel
+@{
+    ViewData["Title"] = "Agregar Favorito";
+}
+
+<div class="add-list-container">
+    <div class="form-header">
+        <h2>Agregar Nuevo Favorito</h2>
+        <p>Seleccione y guarde sus películas o series favoritas</p>
+    </div>
+
+    <!-- Filtros de búsqueda -->
+    <div class="search-filters">
+        <form method="post" asp-page-handler="Buscar">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label asp-for="UsuarioSeleccionado">Usuario</label>
+                    <select asp-for="UsuarioSeleccionado" class="form-select" required asp-items="Model.Usuarios">
+                        <option value="">Seleccione usuario</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label asp-for="Favorito.Tipo">Tipo</label>
+                    <select asp-for="Favorito.Tipo" class="form-select" required onchange="this.form.submit()">
+                        <option value="">Seleccione tipo</option>
+                        <option value="Pelicula" selected="@(Model.Favorito.Tipo == "Pelicula")">Película</option>
+                        <option value="Serie" selected="@(Model.Favorito.Tipo == "Serie")">Serie</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label>Género</label>
+                    @if (Model.Favorito.Tipo == "Pelicula")
+                    {
+                        <select asp-for="GeneroSeleccionado" class="form-select" required>
+                            <option value="">Seleccione género</option>
+                            @foreach (var genero in Model.GenerosPeliculas)
+                            {
+                                <option value="@genero.Id" selected="@(Model.GeneroSeleccionado == genero.Id)">@genero.Name</option>
+                            }
+                        </select>
+                    }
+                    else if (Model.Favorito.Tipo == "Serie")
+                    {
+                        <select asp-for="GeneroSeleccionado" class="form-select" required>
+                            <option value="">Seleccione género</option>
+                            @foreach (var genero in Model.GenerosSeries)
+                            {
+                                <option value="@genero.Id" selected="@(Model.GeneroSeleccionado == genero.Id)">@genero.Name</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                        <select disabled class="form-select"><option>Seleccione tipo primero</option></select>
+                    }
+                </div>
+
+                <div class="filter-action">
+                    <button type="submit" class="search-btn">Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Resultados -->
+    @if (Model.Favorito.Tipo == "Pelicula" && Model.Peliculas.Any())
+    {
+        <div class="results-section">
+            <h3>Películas</h3>
+            <div class="results-grid">
+                @foreach (var peli in Model.Peliculas)
+                {
+                    <div class="media-card @(Model.Favorito.TMDB_ID == peli.Id ? "selected" : "")" onclick="seleccionar('Pelicula', @peli.Id)">
+                        <div class="media-poster">
+                            <img src="@($"https://image.tmdb.org/t/p/w200{peli.Poster_path}")" alt="@peli.Title" onerror="this.src='https://via.placeholder.com/200x300?text=No+Image'" />
+                        </div>
+                        <div class="media-info">
+                            <h4>@peli.Title</h4>
+                            <p class="media-overview">@peli.Overview</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else if (Model.Favorito.Tipo == "Serie" && Model.Series.Any())
+    {
+        <div class="results-section">
+            <h3>Series</h3>
+            <div class="results-grid">
+                @foreach (var serie in Model.Series)
+                {
+                    <div class="media-card @(Model.Favorito.TMDB_ID == serie.Id ? "selected" : "")" onclick="seleccionar('Serie', @serie.Id)">
+                        <div class="media-poster">
+                            <img src="@($"https://image.tmdb.org/t/p/w200{serie.Poster_path}")" alt="@serie.Name" onerror="this.src='https://via.placeholder.com/200x300?text=No+Image'" />
+                        </div>
+                        <div class="media-info">
+                            <h4>@serie.Name</h4>
+                            <p class="media-overview">@serie.Overview</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    <!-- Formulario para comentario, puntuación y guardar -->
+    <form method="post" asp-page-handler="Guardar" class="details-form">
+        <input type="hidden" name="UsuarioSeleccionado" value="@Model.UsuarioSeleccionado" />
+        <input type="hidden" asp-for="Favorito.TMDB_ID" />
+        <input type="hidden" asp-for="Favorito.Tipo" />
+
+        <div class="form-group">
+            <label asp-for="Favorito.Comentario">Comentario</label>
+            <textarea asp-for="Favorito.Comentario" class="form-control" rows="3"></textarea>
+            <span asp-validation-for="Favorito.Comentario" class="validation-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Favorito.Puntuacion">Puntuación (1-10)</label>
+            <input asp-for="Favorito.Puntuacion" type="number" min="1" max="10" step="0.1" class="form-control" />
+            <span asp-validation-for="Favorito.Puntuacion" class="validation-message"></span>
+        </div>
+
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="error-message">@Model.ErrorMessage</div>
+        }
+
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">Guardar Favorito</button>
+            <a asp-page="./Index" class="cancel-btn">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        function seleccionar(tipo, id) {
+            document.querySelector('input[name="Favorito.TMDB_ID"]').value = id;
+            document.querySelector('input[name="Favorito.Tipo"]').value = tipo;
+
+            document.querySelectorAll('.media-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+
+            const selectedCards = document.querySelectorAll(`.media-card[onclick="seleccionar('${tipo}', ${id})"]`);
+            selectedCards.forEach(card => {
+                card.classList.add('selected');
+            });
+        }
+    </script>
+}

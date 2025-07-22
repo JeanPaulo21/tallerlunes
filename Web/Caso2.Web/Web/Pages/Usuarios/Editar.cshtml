@@ -1,0 +1,37 @@
+﻿@page
+@model Web.Pages.Usuarios.EditarModel
+@{
+    ViewData["Title"] = "Editar Usuario";
+}
+
+<div class="edit-container">
+    <div class="edit-header">
+        <h2>Editar Usuario</h2>
+        <p>Actualice la información del usuario</p>
+    </div>
+
+    <form method="post" class="edit-form">
+        <div class="form-group">
+            <label asp-for="UsuarioResponse.Nombre" class="form-label">Nombre</label>
+            <input asp-for="UsuarioResponse.Nombre" class="form-control" placeholder="Ingrese el nombre completo" />
+            <span asp-validation-for="UsuarioResponse.Nombre" class="validation-message"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="UsuarioResponse.Correo" class="form-label">Correo Electrónico</label>
+            <input asp-for="UsuarioResponse.Correo" class="form-control" placeholder="Ingrese el correo electrónico" />
+            <span asp-validation-for="UsuarioResponse.Correo" class="validation-message"></span>
+        </div>
+
+        <input type="hidden" asp-for="UsuarioResponse.ID" />
+
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">Actualizar</button>
+            <a asp-page="/Usuarios/Index" class="cancel-btn">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

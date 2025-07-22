@@ -1,0 +1,38 @@
+﻿@page
+@model GenerosSeriesModel
+@{
+    ViewData["Title"] = "Géneros de Series";
+}
+
+<div class="genres-container">
+    <div class="section-header">
+        <h1>Géneros de Series</h1>
+        <p>Explora los diferentes géneros de series de televisión</p>
+    </div>
+
+    @if (Model.GeneroSerie != null && Model.GeneroSerie.Any())
+    {
+        <div class="genres-grid">
+            @foreach (var genero in Model.GeneroSerie)
+            {
+                <div class="genre-card">
+                    <div class="genre-content">
+                        <h3>@genero.Name</h3>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-message">
+            <p>No se encontraron géneros de series</p>
+        </div>
+    }
+
+    <div class="back-section">
+        <a asp-page="/Peliculas/Index" class="back-btn">
+            Volver al listado
+        </a>
+    </div>
+</div>

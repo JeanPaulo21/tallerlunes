@@ -1,0 +1,74 @@
+﻿@page
+@model Web.Pages.Listas.IndexModel
+@{
+    ViewData["Title"] = "Listas de Visualización";
+}
+
+<div class="lists-container">
+    <div class="lists-header">
+        <h1>Listas de Visualización</h1>
+        <div class="lists-actions">
+            <a asp-page="/Listas/Agregar" class="action-btn primary-action">
+                <i class="bi bi-plus-lg"></i> Agregar Lista
+            </a>
+            <a asp-page="/Listas/DetalleUsuario" class="action-btn info-action">
+                <i class="bi bi-people"></i> Listas por Usuario
+            </a>
+        </div>
+    </div>
+
+    @if (Model.Listas != null && Model.Listas.Any())
+    {
+        <div class="lists-grid">
+            @foreach (var lista in Model.Listas)
+            {
+                <div class="list-card">
+                    <div class="list-card-header">
+                        <div class="list-icon">
+                            @if (lista.Tipo == "Pelicula")
+                            {
+                                <i class="bi bi-film"></i>
+                            }
+                            else if (lista.Tipo == "Serie")
+                            {
+                                <i class="bi bi-tv"></i>
+                            }
+                        </div>
+                        <h3 class="list-title">
+                            @lista.Tipo ID: @lista.TMDB_ID
+                        </h3>
+                    </div>
+                    <div class="list-details">
+                        <p><i class="bi bi-list-ol"></i> Prioridad: @lista.Prioridad</p>
+                        <p><i class="bi bi-chat-text"></i> Comentario: @lista.Comentario</p>
+                        <p><i class="bi bi-calendar"></i> Registrado: @lista.FechaRegistro?.ToString("dd/MM/yyyy")</p>
+                    </div>
+                    <div class="list-actions">
+                        <a asp-page="/Listas/DetalleLista" asp-route-id="@lista.ID" class="action-btn info-action">
+                            Detalle
+                        </a>
+                        <a asp-page="/Listas/Editar" asp-route-id="@lista.ID" class="action-btn warning-action">
+                            Editar
+                        </a>
+                        <a asp-page="/Listas/Eliminar" asp-route-id="@lista.ID" class="action-btn danger-action">
+                            Eliminar
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="no-lists">
+            <i class="bi bi-list-check"></i>
+            <p>No hay listas de visualización disponibles</p>
+        </div>
+    }
+
+    <div class="back-container">
+        <a asp-page="/Index" class="back-btn">
+            Volver al menú principal
+        </a>
+    </div>
+</div>

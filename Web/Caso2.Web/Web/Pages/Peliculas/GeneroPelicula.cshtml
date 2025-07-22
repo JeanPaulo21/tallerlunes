@@ -1,0 +1,38 @@
+﻿@page
+@model GenerosPeliculasModel
+@{
+    ViewData["Title"] = "Géneros de Películas";
+}
+
+<div class="genres-container">
+    <div class="section-header">
+        <h1>Géneros de Películas</h1>
+        <p>Explora los diferentes géneros cinematográficos</p>
+    </div>
+
+    @if (Model.GeneroPelicula != null && Model.GeneroPelicula.Any())
+    {
+        <div class="genres-grid">
+            @foreach (var genero in Model.GeneroPelicula)
+            {
+                <div class="genre-card">
+                    <div class="genre-content">
+                        <h3>@genero.Name</h3>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="empty-message">
+            <p>No se encontraron géneros de películas</p>
+        </div>
+    }
+
+    <div class="back-section">
+        <a asp-page="/Peliculas/Index" class="back-btn">
+            Volver al listado
+        </a>
+    </div>
+</div>
