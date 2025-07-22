@@ -1,0 +1,60 @@
+﻿@page
+@model Web.Pages.Usuarios.IndexModel
+@{
+    ViewData["Title"] = "Listado de Usuarios";
+}
+
+<div class="users-container">
+    <div class="users-header">
+        <h1>Listado de Usuarios</h1>
+        <div class="users-actions">
+            <a asp-page="./Agregar" class="action-btn primary-action">
+                <i class="bi bi-plus-lg"></i> Agregar Usuario
+            </a>
+        </div>
+    </div>
+
+    @if (Model.usuarios != null && Model.usuarios.Any())
+    {
+        <div class="users-grid">
+            @foreach (var usuario in Model.usuarios)
+            {
+                <div class="user-card">
+                    <div class="user-card-header">
+                        <div class="user-avatar">
+                            <i class="bi bi-person-circle"></i>
+                        </div>
+                        <h3 class="user-name">@usuario.Nombre</h3>
+                    </div>
+                    <div class="user-details">
+                        <p><i class="bi bi-envelope"></i> @usuario.Correo</p>
+                    </div>
+                    <div class="user-actions">
+                        <a asp-page="/Usuarios/Detalle" asp-route-id="@usuario.ID" class="action-btn info-action">
+                            Detalle
+                        </a>
+                        <a asp-page="/Usuarios/Editar" asp-route-id="@usuario.ID" class="action-btn warning-action">
+                            Editar
+                        </a>
+                        <a asp-page="/Usuarios/Eliminar" asp-route-id="@usuario.ID" class="action-btn danger-action">
+                             Eliminar
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="no-users">
+            <i class="bi bi-people"></i>
+            <p>No hay usuarios registrados</p>
+        </div>
+    }
+
+    <div class="back-container">
+        <a asp-page="/Index" class="back-btn">
+             Volver al menú principal
+        </a>
+    </div>
+</div>

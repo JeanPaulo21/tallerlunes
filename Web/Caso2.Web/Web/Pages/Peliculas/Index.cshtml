@@ -1,0 +1,63 @@
+﻿@page
+@model Web.Pages.Peliculas.IndexModel
+@{
+    ViewData["Title"] = "Explorar TMDB";
+}
+
+<div class="tmdb-container">
+    <div class="tmdb-header">
+        <h1>Explora TMDB</h1>
+        <p class="subtitle">Descubre películas, series y géneros</p>
+    </div>
+
+    <div class="tmdb-grid">
+        <div class="tmdb-card">
+            <div class="tmdb-card-icon series-icon">
+                <i class="bi bi-tv"></i>
+            </div>
+            <h3>Géneros de Series</h3>
+            <p>Explora todos los géneros de series disponibles</p>
+            <a asp-page="/Peliculas/GeneroSerie" class="tmdb-btn primary-btn">
+                Ver géneros <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="tmdb-card">
+            <div class="tmdb-card-icon movie-icon">
+                <i class="bi bi-film"></i>
+            </div>
+            <h3>Géneros de Películas</h3>
+            <p>Descubre los géneros cinematográficos</p>
+            <a asp-page="/Peliculas/GeneroPelicula" class="tmdb-btn success-btn">
+                Ver géneros <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="tmdb-card">
+            <div class="tmdb-card-icon series-icon">
+                <i class="bi bi-collection-play"></i>
+            </div>
+            <h3>Series por Género</h3>
+            <p>Encuentra series por categoría</p>
+            <a asp-page="/Peliculas/SeriesPorGenero" class="tmdb-btn primary-btn">
+                Explorar <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+
+        <div class="tmdb-card">
+            <div class="tmdb-card-icon movie-icon">
+                <i class="bi bi-camera-reels"></i>
+            </div>
+            <h3>Películas por Género</h3>
+            <p>Busca películas por su género</p>
+            <a asp-page="/Peliculas/PeliculasPorGenero" class="tmdb-btn success-btn">
+                Explorar <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+    </div>
+    <div class="back-container">
+        <a asp-page="/Index" class="back-btn">
+            Volver al menú principal
+        </a>
+    </div>
+</div>

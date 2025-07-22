@@ -1,0 +1,37 @@
+﻿@page
+@model Web.Pages.Usuarios.AgregarModel
+@{
+    ViewData["Title"] = "Agregar Usuario";
+}
+
+<div class="form-container">
+    <div class="form-header">
+        <h2>Agregar Nuevo Usuario</h2>
+        <p>Complete los datos del usuario</p>
+    </div>
+
+    <div class="form-card">
+        <form method="post" class="needs-validation" novalidate>
+            <div class="form-group">
+                <label asp-for="usuario.Nombre" class="form-label">Nombre Completo</label>
+                <input asp-for="usuario.Nombre" class="form-control" placeholder="Ingrese el nombre completo" />
+                <span asp-validation-for="usuario.Nombre" class="validation-message"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="usuario.Correo" class="form-label">Correo Electrónico</label>
+                <input asp-for="usuario.Correo" class="form-control" placeholder="Ingrese el correo electrónico" />
+                <span asp-validation-for="usuario.Correo" class="validation-message"></span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="action-btn primary-action">Guardar Usuario</button>
+                <a asp-page="/Usuarios/Index" class="action-btn cancel-action">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

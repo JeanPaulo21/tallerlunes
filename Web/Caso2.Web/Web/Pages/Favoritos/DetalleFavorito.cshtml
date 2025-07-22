@@ -1,0 +1,61 @@
+﻿@page
+@model Web.Pages.Favoritos.DetalleFavoritoModel
+@{
+    ViewData["Title"] = "Detalle de Favorito";
+}
+
+<div class="detail-container">
+    <div class="detail-header">
+        <h1>Detalle de Favorito</h1>
+        <p>Información completa del elemento favorito</p>
+    </div>
+
+    @if (Model.Favorito == null)
+    {
+        <div class="not-found-message">
+            Favorito no encontrado
+        </div>
+    }
+    else
+    {
+        <div class="detail-card">
+            <div class="detail-content">
+                <div class="media-type-badge @Model.Favorito.Tipo.ToLower()">
+                    @if (Model.Favorito.Tipo == "Pelicula")
+                    {
+                        <span>Película ID: @Model.Favorito.TMDB_ID</span>
+                    }
+                    else if (Model.Favorito.Tipo == "Serie")
+                    {
+                        <span>Serie ID: @Model.Favorito.TMDB_ID</span>
+                    }
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">Usuario ID:</span>
+                    <span class="detail-value">@Model.Favorito.UsuarioID</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">Comentario:</span>
+                    <span class="detail-value">@Model.Favorito.Comentario</span>
+                </div>
+
+                <div class="detail-item">
+                    <span class="detail-label">Puntuación:</span>
+                    <span class="detail-value">@Model.Favorito.Puntuacion</span>
+                </div>
+
+                <div class="detail-date">
+                    <span>Fecha de Registro: @Model.Favorito.FechaRegistro.ToString("dd/MM/yyyy")</span>
+                </div>
+            </div>
+
+            <div class="detail-actions">
+                <a asp-page="./Index" class="back-btn">Volver al Listado</a>
+                <a asp-page="./Editar" asp-route-id="@Model.Favorito.ID" class="edit-btn">Editar</a>
+                <a asp-page="./Eliminar" asp-route-id="@Model.Favorito.ID" class="delete-btn">Eliminar</a>
+            </div>
+        </div>
+    }
+</div>

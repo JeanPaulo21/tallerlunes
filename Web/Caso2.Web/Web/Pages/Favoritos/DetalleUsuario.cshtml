@@ -1,0 +1,70 @@
+﻿@page
+@model Web.Pages.Favoritos.DetalleUsuarioModel
+@{
+    ViewData["Title"] = "Detalle de Usuario - Favoritos";
+}
+
+<div class="user-lists-container">
+    <div class="section-header">
+        <h2>Detalle de Usuario - Favoritos</h2>
+        <p>Visualice las Favoritos por usuario</p>
+    </div>
+
+    <div class="filter-section">
+        <form method="get">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label asp-for="UsuarioSeleccionado">Seleccione un usuario:</label>
+                    <select asp-for="UsuarioSeleccionado" asp-items="Model.ListaUsuarios" class="form-select">
+                        <option value="">-- Seleccione --</option>
+                    </select>
+                </div>
+                <div class="filter-action">
+                    <button type="submit" class="filter-btn">Ver Favoritos</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @if (Model.Favoritos?.Any() == true)
+    {
+        <div class="results-section">
+            <h3>Favoritos del Usuario</h3>
+            <div class="responsive-table">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>TMDB ID</th>                            
+                            <th>Comentario</th>
+                            <th>Puntuación</th>
+                            <th>Fecha Registro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var favorito in Model.Favoritos)
+                        {
+                            <tr>
+                                <td><span class="badge @(favorito.Tipo == "Pelicula" ? "movie-badge" : "series-badge")">@favorito.Tipo</span></td>
+                                <td>@favorito.TMDB_ID</td>
+                                <td>@favorito.Comentario</td>
+                                <td>@(string.IsNullOrEmpty(favorito.Comentario) ? "-" : favorito.Comentario)</td>
+                                <td>@favorito.FechaRegistro.ToString("g")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else if (Model.NoHayFavoritos)
+    {
+        <div class="empty-state">
+            <p>Este usuario no tiene Favoritos registradas</p>
+        </div>
+    }
+
+    <div class="actions-section">
+        <a asp-page="/Favoritos/Index" class="back-btn">Volver a Favoritos</a>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+﻿@page
+@model Web.Pages.Listas.DetalleUsuarioModel
+@{
+    ViewData["Title"] = "Detalle de Usuario - Listas";
+}
+
+<div class="user-lists-container">
+    <div class="section-header">
+        <h2>Detalle de Usuario - Listas</h2>
+        <p>Visualice las listas de visualización por usuario</p>
+    </div>
+
+    <div class="filter-section">
+        <form method="get">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <label asp-for="UsuarioSeleccionado">Seleccione un usuario:</label>
+                    <select asp-for="UsuarioSeleccionado" asp-items="Model.ListaUsuarios" class="form-select">
+                        <option value="">-- Seleccione --</option>
+                    </select>
+                </div>
+                <div class="filter-action">
+                    <button type="submit" class="filter-btn">Ver Listas</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @if (Model.Listas?.Any() == true)
+    {
+        <div class="results-section">
+            <h3>Listas del Usuario</h3>
+            <div class="responsive-table">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Tipo</th>
+                            <th>TMDB ID</th>
+                            <th>Prioridad</th>
+                            <th>Comentario</th>
+                            <th>Fecha Registro</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var lista in Model.Listas)
+                        {
+                            <tr>
+                                <td><span class="badge @(lista.Tipo == "Pelicula" ? "movie-badge" : "series-badge")">@lista.Tipo</span></td>
+                                <td>@lista.TMDB_ID</td>
+                                <td>@lista.Prioridad</td>
+                                <td>@(string.IsNullOrEmpty(lista.Comentario) ? "-" : lista.Comentario)</td>
+                                <td>@lista.FechaRegistro?.ToString("g")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else if (Model.NoHayListas)
+    {
+        <div class="empty-state">
+            <p>Este usuario no tiene listas registradas</p>
+        </div>
+    }
+
+    <div class="actions-section">
+        <a asp-page="/Listas/Index" class="back-btn">Volver a Listas</a>
+    </div>
+</div>

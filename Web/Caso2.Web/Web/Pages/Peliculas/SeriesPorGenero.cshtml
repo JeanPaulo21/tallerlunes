@@ -1,0 +1,60 @@
+﻿@page
+@model SeriesPorGenero
+@{
+    ViewData["Title"] = "Series por Género";
+}
+
+<div class="movies-container">
+    <div class="section-header">
+        <h1>Series por Género</h1>
+        <p>Descubre series por categoría</p>
+    </div>
+
+    <div class="filter-section">
+        <form method="post">
+            <div class="filter-grid">
+                <div class="filter-group">
+                    <select asp-for="GeneroSeleccionado" class="form-select" asp-items="@(new SelectList(Model.Generos, "Id", "Name"))" required>
+                        <option value="">Seleccione un género</option>
+                    </select>
+                </div>
+                <div class="filter-action">
+                    <button type="submit" class="primary-btn">Buscar</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    @if (Model.Series != null && Model.Series.Any())
+    {
+        <div class="movies-grid">
+            @foreach (var serie in Model.Series)
+            {
+                <div class="movie-card">
+                    @if (!string.IsNullOrEmpty(serie.Poster_path))
+                    {
+                        <div class="movie-poster">
+                            <img src="@($"https://image.tmdb.org/t/p/w500{serie.Poster_path}")" alt="@serie.Name" onerror="this.src='https://via.placeholder.com/300x450?text=No+Image'" />
+                        </div>
+                    }
+                    <div class="movie-info">
+                        <h3>@serie.Name</h3>
+                        <p class="movie-overview">@serie.Overview</p>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else if (Model.GeneroSeleccionado > 0)
+    {
+        <div class="empty-message">
+            <p>No se encontraron series para este género</p>
+        </div>
+    }
+
+    <div class="back-section">
+        <a asp-page="/Peliculas/Index" class="back-btn">
+            Volver al listado
+        </a>
+    </div>
+</div>

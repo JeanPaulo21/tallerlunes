@@ -1,0 +1,41 @@
+﻿@page
+@model Web.Pages.Usuarios.EliminarModel
+@{
+    ViewData["Title"] = "Eliminar Usuario";
+}
+
+<div class="delete-container">
+    <div class="delete-header">
+        <h1>Eliminar Usuario</h1>
+        <p>Confirme la eliminación de este usuario</p>
+    </div>
+
+    <form method="post" class="delete-form">
+        @if (Model.Usuario == null)
+        {
+            <div class="not-found-message">
+                Usuario no encontrado
+            </div>
+        }
+        else
+        {
+            <div class="delete-card">
+                <div class="delete-content">
+                    <h3>@Html.DisplayFor(modelo => modelo.Usuario.Nombre)</h3>
+                    
+                    <div class="delete-details">
+                        <div class="detail-item">
+                            <span class="detail-label">@Html.DisplayNameFor(modelo => modelo.Usuario.Correo):</span>
+                            <span class="detail-value">@Html.DisplayFor(modelo => modelo.Usuario.Correo)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="delete-actions">
+                <a asp-page="/Usuarios/Index" class="cancel-btn">Volver al Listado</a>
+                <button type="submit" class="delete-btn">Confirmar Eliminación</button>
+            </div>
+        }
+    </form>
+</div>
